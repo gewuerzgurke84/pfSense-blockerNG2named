@@ -15,6 +15,13 @@ $ cd /root/ && curl https://raw.githubusercontent.com/gewuerzgurke84/pfSense-blo
 ## Adjust parameters for your environment
 - [x] Please adjust the $destVIP parameter to the configured DNSBL Virtual IP (can be found unter Firewall > pfBlockerNG > DNSBL).
 - [x] Decide if the script should restart named automatically $restartNamed (Y/N)
+## Add created zone file to bind zone
+Navigate to Services > BIND DNS Server > View.
+Select the zone that should block DNS requests based on pfBlockerNG data.
+Add include statement
+```
+include "/etc/namedb/fuck.ads.conf";
+```
 ## Add cron
 Let this script run on a regular basis using built-in cron. (Services > Cron)
 
