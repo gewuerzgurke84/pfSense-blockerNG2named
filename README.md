@@ -10,7 +10,7 @@ Furthermore there needs to be a bind running and you need access via ssh to your
 ## Login via ssh
 ## Copy script
 ```
-$ cd /root && wget
+$ cd /root/ && curl https://raw.githubusercontent.com/gewuerzgurke84/pfSense-blockerNG2named/master/createBlockingZonefile.sh > createBlockingZonefile.sh
 ```
 ## Adjust parameters for your environment
 - [x] Please adjust the $destVIP parameter to the configured DNSBL Virtual IP (can be found unter Firewall > pfBlockerNG > DNSBL).
