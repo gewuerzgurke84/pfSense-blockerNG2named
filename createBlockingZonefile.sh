@@ -14,12 +14,17 @@
 sourceFilePattern="/var/db/pfblockerng/dnsbl/*.txt"
 
 #
+# Whitelist File: Never point zones from whitelist to blocklist
+#
+whitelistFile="/root/createBlockingZonefileWhitelist.txt"
+
+#
 # Destination Directories: Destination bind/named zone file
 #
 destZoneFilename="/etc/namedb/fuck.ads.zone"
 destZoneFilenameInChroot="/cf/named/etc/namedb/fuck.ads.zone"
-destZoneConfig=/etc/namedb/fuck.ads.conf
-destZoneConfigInChroot=/cf/named/etc/namedb/fuck.ads.conf
+destZoneConfig="/etc/namedb/fuck.ads.conf"
+destZoneConfigInChroot="/cf/named/etc/namedb/fuck.ads.conf"
 
 #
 # Destination Virtual IP (please use the same Virtual IP as configured in pfBlockerNG)
@@ -60,12 +65,20 @@ do
         do
                 domain=`echo $line |cut -d\" -f2 |cut -d" " -f1 |grep -v _`
                 if [ ! -z "$domain" ]; then
+                        # If Whitelist exists and domain in WL skip domain
+                        if [ -f "$whitelistFile" ]; then
+                            inWL=`grep $domain $whitelistFile`
+                            if [ ! -z "$inWL" ]; then
+                                echo "### Skipping Domain from $whitelistFile ($domain)"
+                                continue
+                            fi
+                        fi                        
                         echo "zone \"${domain}\"  { type master; notify no; file \"${destZoneFilename}\"; };" >> $destZoneConfigInChroot
                 fi
         done < $blockFile
 done
 
-# Restart named 
+# Restart named
 if [ "$restartNamed" == "Y" ]; then
     echo "# Restarting named"
     service named.sh restart
