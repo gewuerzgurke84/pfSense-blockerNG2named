@@ -15,6 +15,7 @@ $ cd /root/ && curl https://raw.githubusercontent.com/gewuerzgurke84/pfSense-blo
 ## Adjust parameters for your environment
 - [x] Please adjust the $destVIP parameter to the configured DNSBL Virtual IP (can be found unter Firewall > pfBlockerNG > DNSBL).
 - [x] Decide if the script should restart named automatically $restartNamed (Y/N)
+- [x] Add whitelist entries for domains if necessary (see $whitelistFile)
 ## Add created zone file to bind zone
 Navigate to Services > BIND DNS Server > View.
 Select the zone that should block DNS requests based on pfBlockerNG data.
