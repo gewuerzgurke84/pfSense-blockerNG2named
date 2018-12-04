@@ -7,6 +7,7 @@ It was tested with pfSense 2.4.3, pfBlockerNG 2.1.2_3 and bind9.12
 # Installation
 I assume that you have pfBlockerNG installed and added some DNS Blocklists. I've succesfully done that with this guide (https://www.tecmint.com/install-configure-pfblockerng-dns-black-listing-in-pfsense/).
 Furthermore there needs to be a bind running and you need access via ssh to your pfSense box.
+Also ensure that unbound is running because pfBlockerNG relies on it. I've adjusted unbound dns port to 5353 and bound it to Localhost-only.
 ## Login via ssh
 ## Copy script
 ```
