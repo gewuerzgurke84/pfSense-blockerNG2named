@@ -34,7 +34,7 @@ destVIP=10.10.10.1
 #
 # Restart named
 #
-restartNamed="Y"
+restartNamed="N"
 
 
 # Write zone file
@@ -63,7 +63,7 @@ do
         echo "## Processing ($blockFile)"
         while read line
         do
-                domain=`echo $line |cut -d\" -f2 |cut -d" " -f1 |grep -v _`
+                domain=`echo $line |cut -d\" -f2 |cut -d" " -f1 |grep -v _ |grep -v "@"`
                 if [ ! -z "$domain" ]; then
                         # If Whitelist exists and domain in WL skip domain
                         if [ -f "$whitelistFile" ]; then
@@ -72,7 +72,7 @@ do
                                 echo "### Skipping Domain from $whitelistFile ($domain)"
                                 continue
                             fi
-                        fi                        
+                        fi
                         echo "zone \"${domain}\"  { type master; notify no; file \"${destZoneFilename}\"; };" >> $destZoneConfigInChroot
                 fi
         done < $blockFile
