@@ -5,12 +5,17 @@ pfSense users which like the pfBlockerNG addon and the bind9 as a recursive DNS 
 This script can be installed on a pfSense machine and converts given DNS blocklist in a bind compatible way. 
 It was tested with: pfSense 2.4.3/2.4.4/2.4.4_1, pfBlockerNG 2.1.2_3/pfBlockerNG-Devel 2.2.5_19 and bind9.12
 # Prerequisite
-.. * You need to have pfBlockerNG / pfBlockerNG-Devel installed and configured. Consider following guides: https://www.tecmint.com/install-configure-pfblockerng-dns-black-listing-in-pfsense/
+
+   * You need to have pfBlockerNG / pfBlockerNG-Devel installed and configured. Consider following guides: https://www.tecmint.com/install-configure-pfblockerng-dns-black-listing-in-pfsense/
 https://www.linuxincluded.com/block-ads-malvertising-on-pfsense-using-pfblockerng-dnsbl/
-.. * You need to have bind installed and serving your clients dns requests
-.. * For compatibility reasons you need to ensure unbound is running. I've activated it on port 53535 running on localhost only so it does not interfere with bind or something lese
-.. * pfBlocker services must be activated
-.. * SSH Login Rights
+
+   * You need to have bind installed and serving your clients dns requests
+   
+   * For compatibility reasons you need to ensure unbound is running. I've activated it on port 53535 running on localhost only so it does not interfere with bind or something lese
+   
+   * pfBlocker services must be activated
+   
+   * SSH Login Rights
 # Installation
 ## Login via ssh
 ## Copy script
