@@ -56,15 +56,20 @@ EOF
 echo > /tmp/.pfBlockerToBind.1
 
 #
-# Collect zones and ensure bind compatibility
+# Collect fqdns and ensure named compatibility
 #
 echo "# Collecting configured pfBlockerNG DNS Blacklist Files ($sourceFilePattern)"
 for blockFile in $sourceFilePattern
 do
         echo "## Processing $blockFile"
-        # Format of file is "local-data: "<zone> IN a <virtual dnsblip>""        
-        # We'll make zones bind compatible by removing "_" and "@" and transforming them
-        cat $blockFile | cut -d\" -f2 | grep -v _ | grep -v "@" |grep $destVIP >> /tmp/.pfBlockerToBind.1        
+        # Format of file is "local-data: "<fqdn> IN a <virtual dnsblip>""        
+
+        # We filter out names that make named complain by violating the grammar
+        # and length restrictions of RFC1035. This awk script is an incremental
+        # improvement on the original grep filtering, but it really needs to be
+        # a proper regex match describing the RFC1035 grammar rather than a
+        # filter that looks for specific bad patterns from the blacklist names.
+        awk 'BEGIN { FS = ": " } length($2) < 256 && ! ( /[@_]/ || /\"-/ || /\.-/ || /-\./) { gsub("\"","",$2); print $2;}' $blockFile  >> /tmp/.pfBlockerToBind.1
 done
 
 #
