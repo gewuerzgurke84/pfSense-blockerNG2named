@@ -88,6 +88,7 @@ if [ -f "$whitelistFile" ]; then
     done < $whitelistFile    
 else
     echo "# Whitelist not found ($whitelistFile)"
+    mv /tmp/.pfBlockerToBind.1 /tmp/.pfBlockerToBind.2
 fi
     
 #
